@@ -9,9 +9,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var userInput: String = ""
-    @State private var chosenUnit: String = ""
-    @State private var userOutput: String = ""
+    @State private var userInput: Double = 0
+    @State private var convertFromUnit: String = ""
+    @State private var convertIntoUnit: String =  ""
+    var result: Double {
+        let convertedResult: Double = 0.0
+        return convertedResult
+    }
     
     // The temperure metrics that the user can choose from
     let metricValues = ["Celsius", "Fahrenheit", "Kelvin"]
@@ -21,21 +25,33 @@ struct ContentView: View {
             Form {
                 Section {
                     // TextField that take user input
-                    TextField("Type a value to convert", text: $userInput)
+                    TextField("Type a value to convert", value: $userInput, format: .number )
                         .keyboardType(.numberPad)
                     
                     // Segmented control that the user can choose from what unit to convert from
-                    Picker("Conver from: ", selection: $chosenUnit) {
+                    Text("Convert from:")
+                    Picker("Conver from: ", selection: $convertFromUnit) {
                         ForEach(metricValues, id: \.self) {
                             Text($0)
                         }
                     }.pickerStyle(.segmented)
                 }
+                
+                Section {
+                    // Segmented control that the user can choose what type of unit to convert to
+                    Text("Convert to:")
+                    Picker("Conver to: ", selection: $convertIntoUnit) {
+                        ForEach(metricValues, id: \.self) {
+                            Text($0)
+                        }
+                    }.pickerStyle(.segmented)
+                    // TextView that shows the converted input
+                    Text("\(result)")
+
+                }
             }.navigationTitle("TempConvert")
 
         }
-        // Segmented control that the user can choose what type of unit to convert to
-        // TextView that shows the converted input
     }
 }
 
