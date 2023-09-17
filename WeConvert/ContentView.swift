@@ -14,6 +14,11 @@ struct ContentView: View {
     @State private var convertIntoUnit: String =  ""
     var result: Double {
         var convertedResult: Double = 0.0
+        if convertFromUnit == "Fahrenheit" {
+            convertedResult = userInput * 1.8 + 32
+        } else if convertFromUnit == "Kelvin" {
+            convertedResult = userInput + 273.15
+        }
         return convertedResult
     }
     
@@ -38,7 +43,7 @@ struct ContentView: View {
                     }.pickerStyle(.segmented)
                     
                     // TextView that shows the converted input
-                    Text("Result:")
+                    Text("Result in \(convertFromUnit):")
                     Text("\(result.formatted(.number))")
 
                 }
