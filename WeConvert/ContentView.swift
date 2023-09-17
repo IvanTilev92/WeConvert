@@ -13,40 +13,33 @@ struct ContentView: View {
     @State private var convertFromUnit: String = ""
     @State private var convertIntoUnit: String =  ""
     var result: Double {
-        let convertedResult: Double = 0.0
+        var convertedResult: Double = 0.0
         return convertedResult
     }
     
     // The temperure metrics that the user can choose from
-    let metricValues = ["Celsius", "Fahrenheit", "Kelvin"]
+    let metricValues = ["Fahrenheit", "Kelvin"]
     
     var body: some View {
         NavigationView {
             Form {
                 Section {
+                    Text("Value in °C")
                     // TextField that take user input
                     TextField("Type a value to convert", value: $userInput, format: .number )
                         .keyboardType(.numberPad)
                     
                     // Segmented control that the user can choose from what unit to convert from
-                    Text("Convert from:")
+                    Text("Convert to:")
                     Picker("Conver from: ", selection: $convertFromUnit) {
                         ForEach(metricValues, id: \.self) {
                             Text($0)
                         }
                     }.pickerStyle(.segmented)
-                }
-                
-                Section {
-                    // Segmented control that the user can choose what type of unit to convert to
-                    Text("Convert to:")
-                    Picker("Conver to: ", selection: $convertIntoUnit) {
-                        ForEach(metricValues, id: \.self) {
-                            Text($0)
-                        }
-                    }.pickerStyle(.segmented)
+                    
                     // TextView that shows the converted input
-                    Text("\(result)")
+                    Text("Result:")
+                    Text("\(result.formatted(.number))")
 
                 }
             }.navigationTitle("TempConvert")
